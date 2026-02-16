@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Cerimônia</title>
+    </head>
+<body>
+
+    <header id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
+            </a>
+            <nav class="menu-links">
+                <a href="index.html">Início</a>
+                <a href="cerimonia.html" class="active">Cerimônia</a> <a href="presentes.html">Presentes</a>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 80px;"> <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">A Cerimônia</h2>
+                <div class="divider"><i class="fa-solid fa-church"></i></div>
+                
+                <div class="location-card single-card">
+                    <div class="loc-text">
+                        <h3>Paróquia</h3>
+                        <p class="address"></p>
+                        <p class="time"></p>
+                        <a href="#" class="btn-outline">Ver Mapa</a>
+                    </div>
+                    <div class="loc-map">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-alt section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">A Recepção</h2>
+                <div class="divider"><i class="fa-solid fa-champagne-glasses"></i></div>
+
+                <div class="location-card single-card reverse">
+                    <div class="loc-text">
+                        <h3></h3>
+                        <p class="address"></p>
+                        <a href="#" class="btn-outline">Ver Mapa</a>
+                    </div>
+                    <div class="loc-map">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">Traje</h2>
+                <div class="dress-code-alert centered-alert">
+                    <i class="fa-solid fa-circle-exclamation alert-icon"></i>
+                    <h3>Atenção Madrinhas</h3>
+                    <p>Por favor, reservem os tons de <strong>Azul</strong> para os padrinhos e madrinhas.</p>
+                    <div class="color-palette forbidden-only">
+                        <div class="color-swatch forbidden" style="background: #1A4B84;">✕</div>
+                        <div class="color-swatch forbidden" style="background: #2B8FA3;">✕</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp-area" class="section-alt section-padding">
+            <div class="container max-width-600">
+                <h2 class="section-title text-center">Confirmação</h2>
+                <div class="divider"><i class="fa-regular fa-envelope"></i></div>
+                
+                <form class="rsvp-form" action="LINK_DO_FORMSPREE" method="POST">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" name="nome" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Confirmar Presença</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
