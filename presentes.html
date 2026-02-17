@@ -1,62 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Lista de Presentes</title>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Presentes - Davi & Camila</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/glass.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
 <body>
+    <div class="noise-overlay"></div>
 
-    <header id="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo-link">
-                <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
-            </a>
-            <nav class="menu-links">
-                <a href="index.html">Início</a>
-                <a href="cerimonia.html">Cerimônia</a>
-                <a href="presentes.html" class="active">Presentes</a> </nav>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-logo">
+            <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
         </div>
-    </header>
+        <ul class="nav-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cerimonia.html">Cerimônia</a></li>
+            <li><a href="presentes.html" class="active">Presentes</a></li>
+        </ul>
+    </nav>
 
-    <main style="padding-top: 80px;">
+    <main class="container">
+        <header class="page-header">
+            <h1>Lista de Presentes</h1>
+            <p>Ajude-nos a construir nossa Lua de Mel.</p>
+        </header>
 
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title text-center">Lista de Presentes</h2>
-                <div class="divider"><i class="fa-solid fa-gift"></i></div>
-                <p class="text-center max-width-600 mb-2">
-                    Cotas simbólicas<br>
-                    Fique à vontade para escolher entre PIX (sem taxas) ou Cartão.
-                </p>
-
-                <div id="grid-presentes" class="gift-grid">
-                    <div class="loading-state">Carregando presentes...</div>
-                </div>
+        <div class="gifts-grid">
+            <div class="glass-card">
+                <div class="gift-img-placeholder"></div>
+                <h3>Jantar Romântico</h3>
+                <p class="gift-price">R$ 150,00</p>
+                <button class="btn-primary" onclick="openGiftModal('Jantar Romântico', 150)">Presentear</button>
             </div>
-        </section>
 
+            <div class="glass-card">
+                <div class="gift-img-placeholder"></div>
+                <h3>Passeio de Barco</h3>
+                <p class="gift-price">R$ 300,00</p>
+                <button class="btn-primary" onclick="openGiftModal('Passeio de Barco', 300)">Presentear</button>
+            </div>
+            
+             <div class="glass-card">
+                <div class="gift-img-placeholder"></div>
+                <h3>Cota Livre</h3>
+                <p class="gift-price">Valor que desejar</p>
+                <button class="btn-outline" onclick="openGiftModal('Cota Livre', 0)">Enviar Pix</button>
+            </div>
+        </div>
     </main>
 
-    <div id="modal-pix" class="modal-overlay hidden">
+    <div id="paymentModal" class="modal-overlay hidden">
         <div class="modal-content">
-            <button class="close-modal" id="btn-close-modal">×</button>
-            <div class="modal-header">
-                <i class="fa-brands fa-pix pix-icon"></i>
-                <h3>Presentear com PIX</h3>
+            <button class="close-modal">&times;</button>
+            <h2 id="modalTitle">Nome do Presente</h2>
+            <p id="modalPrice" class="modal-price-highlight">R$ 0,00</p>
+            
+            <div class="pix-box">
+                <span class="pix-label">Chave PIX:</span>
+                <span id="pixKey">000.000.000-00</span>
             </div>
-            <div class="modal-body">
-                <p>Você escolheu: <strong id="modal-gift-name">...</strong></p>
-                <p class="modal-price" id="modal-gift-price">...</p>
-                
-                <div class="pix-key-box">
-                    <code id="pix-key"></code>
-                    <button id="btn-copy-pix" class="btn-outline">Copiar</button>
-                </div>
-                
-                <a href="#" id="btn-whatsapp" target="_blank" class="btn-whatsapp">Enviar Comprovante</a>
-            </div>
+            
+            <button class="btn-primary btn-copy mb-small">Copiar Chave</button>
+            <a href="#" id="whatsappLink" target="_blank" class="btn-outline">Enviar Comprovante</a>
         </div>
     </div>
 
-    <script src="js/gifts.js"></script> <script src="js/main.js"></script>
+    <footer class="footer">
+        <p>Davi & Camila 2026</p>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/pix.js"></script>
 </body>
 </html>

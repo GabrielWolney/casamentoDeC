@@ -1,89 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Cerimônia</title>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerimônia - Davi & Camila</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/glass.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
 <body>
+    <div class="noise-overlay"></div>
 
-    <header id="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo-link">
-                <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
-            </a>
-            <nav class="menu-links">
-                <a href="index.html">Início</a>
-                <a href="cerimonia.html" class="active">Cerimônia</a> <a href="presentes.html">Presentes</a>
-            </nav>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-logo">
+            <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
         </div>
-    </header>
+        <ul class="nav-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cerimonia.html" class="active">Cerimônia</a></li>
+            <li><a href="presentes.html">Presentes</a></li>
+        </ul>
+    </nav>
 
-    <main style="padding-top: 80px;"> <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title text-center">A Cerimônia</h2>
-                <div class="divider"><i class="fa-solid fa-church"></i></div>
+    <main class="container">
+        <header class="page-header">
+            <h1>O Grande Dia</h1>
+            <p>Os detalhes do nosso casamento.</p>
+        </header>
+
+        <section class="glass-card mb-large">
+            <h2 class="text-center mb-medium">Confirme sua Presença</h2>
+            <form class="rsvp-form">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" placeholder="Seu nome">      
+                <button type="submit" class="btn-primary">Confirmar Presença</button>
+            </form>
+        </section>
+
+        <section class="locations-grid mb-large">
+            <div class="glass-card">
+                <img src="assets/img/aquarela-igreja.png" alt="Paróquia Imaculado Coração de Maria" class="location-img">
                 
-                <div class="location-card single-card">
-                    <div class="loc-text">
-                        <h3>Paróquia</h3>
-                        <p class="address"></p>
-                        <p class="time"></p>
-                        <a href="#" class="btn-outline">Ver Mapa</a>
-                    </div>
-                    <div class="loc-map">
-                        </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-alt section-padding">
-            <div class="container">
-                <h2 class="section-title text-center">A Recepção</h2>
-                <div class="divider"><i class="fa-solid fa-champagne-glasses"></i></div>
-
-                <div class="location-card single-card reverse">
-                    <div class="loc-text">
-                        <h3></h3>
-                        <p class="address"></p>
-                        <a href="#" class="btn-outline">Ver Mapa</a>
-                    </div>
-                    <div class="loc-map">
-                        </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <h2 class="section-title text-center">Traje</h2>
-                <div class="dress-code-alert centered-alert">
-                    <i class="fa-solid fa-circle-exclamation alert-icon"></i>
-                    <h3>Atenção Madrinhas</h3>
-                    <p>Por favor, reservem os tons de <strong>Azul</strong> para os padrinhos e madrinhas.</p>
-                    <div class="color-palette forbidden-only">
-                        <div class="color-swatch forbidden" style="background: #1A4B84;">✕</div>
-                        <div class="color-swatch forbidden" style="background: #2B8FA3;">✕</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="rsvp-area" class="section-alt section-padding">
-            <div class="container max-width-600">
-                <h2 class="section-title text-center">Confirmação</h2>
-                <div class="divider"><i class="fa-regular fa-envelope"></i></div>
+                <h3>Cerimônia Religiosa</h3>
+                <p class="mt-small">Paróquia Imaculado Coração de Maria</p>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;">Park Way</p>
+                <p class="location-time">19:00h</p>
                 
-                <form class="rsvp-form" action="LINK_DO_FORMSPREE" method="POST">
-                    <div class="form-group">
-                        <label>Nome Completo</label>
-                        <input type="text" name="nome" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Confirmar Presença</button>
-                </form>
+                <div class="location-actions">
+                    <a href="#" class="btn-outline action-btn">Waze</a>
+                    <a href="#" class="btn-outline action-btn">Maps</a>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <img src="assets/img/oasis-aquarela.png" alt="Recanto Oasis" class="location-img">
+                
+                <h3>Recepção</h3>
+                <p class="mt-small">Recanto Oasis</p>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;">Vicente Pires</p>
+                <p class="location-time">Logo após</p>
+                
+                <div class="location-actions">
+                    <a href="#" class="btn-outline action-btn">Waze</a>
+                    <a href="#" class="btn-outline action-btn">Maps</a>
+                </div>
             </div>
         </section>
 
+        <section class="glass-card text-center">
+            <h3>Dress Code: Esporte Fino</h3>
+            <p class="mt-small mb-medium">Pedimos gentilmente que evitem a cor dos padrinhos:</p>
+            <div class="swatch-container">
+                <div class="swatch swatch-serenity"></div>
+            </div>
+        </section>
     </main>
-    
-    <script src="js/main.js"></script>
+
+    <footer class="footer">
+        <p>Davi & Camila 2026</p>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

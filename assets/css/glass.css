@@ -1,0 +1,45 @@
+﻿:root {
+    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 100%);
+    --glass-filter: blur(20px) saturate(180%);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.25);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    --radius-card: 28px;
+    --radius-btn: 14px;
+    --primary-gradient: linear-gradient(135deg, #5b8db8 0%, #8abce0 100%);
+}
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-filter);
+    -webkit-backdrop-filter: var(--glass-filter);
+    border: var(--glass-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--glass-shadow);
+    padding: clamp(24px, 5vw, 40px);
+    transition: transform 0.4s ease;
+}
+input, select, textarea {
+    width: 100%; padding: 18px 20px; margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 16px;
+    background: rgba(255, 255, 255, 0.4); color: inherit; outline: none;
+}
+input:focus, select:focus { background: rgba(255, 255, 255, 0.9); border-color: #5b8db8; }
+.btn-primary {
+    background: var(--primary-gradient); color: white; border: none;
+    padding: 16px 32px; border-radius: var(--radius-btn);
+    font-weight: 600; cursor: pointer; width: 100%;
+    box-shadow: 0 8px 20px rgba(91, 141, 184, 0.25);
+    transition: transform 0.2s;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-outline {
+    background: transparent; color: #1a2634; border: 1px solid #1a2634;
+    padding: 12px 24px; border-radius: var(--radius-btn);
+    font-weight: 500; text-decoration: none; display: block; text-align: center;
+    transition: background 0.3s;
+}
+.btn-outline:hover { background: rgba(0,0,0,0.05); }
+.noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 9999; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}

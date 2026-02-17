@@ -1,71 +1,81 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mobile.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Davi & Camila</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/glass.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#F4F9FD">
+</head>
 </head>
 <body>
+    <div class="noise-overlay"></div>
 
-   <header id="navbar">
-    <div class="container nav-container">
-        <a href="index.html" class="logo-link">
+    <nav class="navbar" id="mainNav">
+        <div class="nav-logo">
             <img src="assets/img/logo_casamento-aquarela.PNG" alt="D&C" class="logo-img">
-        </a>
-
-        <nav class="menu-links">
-            <a href="index.html">Início</a>
-            <a href="cerimonia.html">Cerimônia</a>
-            <a href="presentes.html">Presentes</a>
-        </nav>
-
-        <div class="nav-action">
-            <a href="cerimonia.html#rsvp-area" class="btn-rsvp">Confirmar</a>
         </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Início</a></li>
+            <li><a href="cerimonia.html">Cerimônia</a></li>
+            <li><a href="presentes.html">Presentes</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+    <div class="hero-bg">
+        <picture>
+            <source media="(min-width: 768px)" srcset="assets/img/hero-pc.png">
+            <img src="assets/img/hero-cll.PNG" alt="Foto do Casal" class="hero-img">
+        </picture>
     </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <h1 class="main-title">Davi & Camila</h1>
+        <p class="hero-date">04 . 07 . 2026</p>
+    </div>
+
+    <div class="scroll-indicator bounce-animation">↓</div>
 </header>
 
-    <main>
-        <section class="hero">
-            <div class="overlay"></div>
-            <div class="hero-content">
-                <p class="pre-title">Save the Date</p>
-                <h1 class="main-title">Davi <span class="amp">&</span> Camila</h1>
-                <p class="date">4 de Julho de 2026</p>
-                
-                <div id="countdown" class="countdown-container">
-                    <div class="time-box"><span id="days">00</span><small>Dias</small></div>
-                    <div class="time-box"><span id="hours">00</span><small>Hs</small></div>
-                    <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
-                </div>
+    <section class="countdown-bar glass-bar">
+        <div id="countdown"></div>
+    </section>
 
-                <a href="cerimonia.html" class="btn-hero">Detalhes & Presença</a>
+    <main class="container">
+        <section class="section-history grid-layout">
+            <div class="glass-card">
+                <h2>Nossa História</h2>
+                <p class="mt-small">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed quidem similique explicabo assumenda ipsum iste rem quod recusandae est perferendis odit, necessitatibus quo perspiciatis deleniti quis, excepturi quasi maxime. Libero!</p>
+            </div>
+            
+            <div class="glass-card img-placeholder">
+                <p>Foto</p>
             </div>
         </section>
-
-        <section class="section-padding">
-            <div class="container text-center">
-                <h2 class="section-title">Nossa História</h2>
-                <div class="divider"><i class="fa-solid fa-heart"></i></div>
-                <p class="text-body max-width-600">
-                    [...]
-                </p>
+        
+        <section class="section-gallery">
+            <div class="glass-card text-center">
+                <h2>Galeria</h2>
+                <p>Lorem ipsum dolor.</p>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container text-center">
-            <p class="hashtag"></p>
-        </div>
+    <footer class="footer">
+        <p>Davi & Camila 2026</p>
     </footer>
 
-    <script src="js/countdown.js"></script> <script src="js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
