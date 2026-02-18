@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cadastro</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <style>
+        /* CSS Específico do Admin (Inline pra facilitar) */
+        body { font-family: sans-serif; padding: 2rem; background: #f0f2f5; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #333; color: white; border: none; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #555; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastrar Presente</h2>
+
+    <div id="login-box">
+        <input type="email" id="email" placeholder="Email Admin">
+        <input type="password" id="senha" placeholder="Senha">
+        <button id="btnLogin">Entrar</button>
+    </div>
+
+    <div id="form-box" class="hidden">
+        <label>Tipo:</label>
+        <select id="tipo">
+            <option value="mp">Presente Normal (Mercado Pago)</option>
+            <option value="pix">Cota Livre (Pix)</option>
+        </select>
+
+        <input type="text" id="titulo" placeholder="Nome do Presente (Ex: Jantar)">
+        
+        <div id="area-valor">
+            <input type="number" id="preco" step="0.01" placeholder="Preço (R$)">
+            <input type="text" id="link_mp" placeholder="Link do Mercado Pago">
+        </div>
+
+        <input type="text" id="imagem" placeholder="Cole aqui o LINK da Imagem (URL)">
+        <small style="display:block; margin-bottom: 10px; color: #666;">Copie o endereço da imagem do Google Imagens ou ImgBB.</small>
+
+        <button id="btnSalvar">Salvar Card</button>
+    </div>
+</div>
+
+<script type="module">
+    import { supabase } from './assets/js/db.js';
+
+    // 1. Login
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('senha').value;
+        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+        
+        if (error) alert("Erro: " + error.message);
+        else {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('form-box').classList.remove('hidden');
+        }
+    });
+
+    // 2. Controla visual do Pix
+    document.getElementById('tipo').addEventListener('change', (e) => {
+        const areaValor = document.getElementById('area-valor');
+        if (e.target.value === 'pix') areaValor.classList.add('hidden');
+        else areaValor.classList.remove('hidden');
+    });
+
+    // 3. Salvar
+    document.getElementById('btnSalvar').addEventListener('click', async () => {
+        const tipo = document.getElementById('tipo').value;
+        const titulo = document.getElementById('titulo').value;
+        const imagem = document.getElementById('imagem').value;
+        let preco = null;
+        let linkMp = null;
+
+        if (tipo === 'mp') {
+            preco = parseFloat(document.getElementById('preco').value);
+            linkMp = document.getElementById('link_mp').value;
+        }
+
+        const { error } = await supabase.from('gifts').insert({
+            title: titulo,
+            price: preco,
+            payment_link: linkMp,
+            image_url: imagem,
+            is_custom: (tipo === 'pix')
+        });
+
+        if (error) alert("Erro: " + error.message);
+        else {
+            alert("Salvo com sucesso!");
+            location.reload(); // Limpa form
+        }
+    });
+</script>
+
+</body>
+</html>
