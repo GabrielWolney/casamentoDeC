@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/glass.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
     <div class="noise-overlay"></div>
@@ -33,25 +34,86 @@
         </div>
     </main>
 
-    <div id="paymentModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button class="close-modal" id="closeModalBtn">&times;</button>
-            <h2 id="modalTitle">Nome do Presente</h2>
-            <p id="modalPrice" class="modal-price-highlight">R$ 0,00</p>
-            
-            <div class="pix-box">
-                <span class="pix-label">Chave PIX:</span>
-                <span id="pixKeyDisplay">CARREGANDO...</span>
-            </div>
-            
-            <button class="btn-primary btn-copy mb-small" id="btnCopyPix">Copiar Chave</button>
-            <a href="#" id="whatsappLink" target="_blank" class="btn-outline">Enviar Comprovante</a>
+    <footer class="footer">
+        <p>Davi & Camila 2026 
+            <span id="triggerAdmin" style="cursor: pointer; opacity: 0.1;">&pi;</span>
+        </p>
+    </footer>
+
+    <div id="modalLogin" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 300px;">
+            <span class="close-modal" id="closeLogin">&times;</span>
+            <h2>Área Restrita</h2>
+            <input type="email" id="adminEmail" placeholder="Email" style="width:100%; margin-bottom:10px; padding:8px;">
+            <input type="password" id="adminPass" placeholder="Senha" style="width:100%; margin-bottom:10px; padding:8px;">
+            <button id="btnLogin" class="btn-primary">Entrar</button>
         </div>
     </div>
 
-    <footer class="footer">
-        <p>Davi & Camila 2026</p>
-    </footer>
+    <div id="paymentModal" class="modal-overlay hidden">
+        <div class="modal-content text-center">
+            <span class="close-modal" id="closePaymentBtn">&times;</span>
+            
+            <h2 id="modalTitle" style="margin-bottom: 10px;">Nome do Presente</h2>
+            
+            <p id="modalPriceDisplay" class="gift-price" style="font-size: 2rem; margin: 15px 0;">R$ 0,00</p>
+
+            <div id="customValueContainer" class="hidden custom-input-wrapper">
+                <p style="margin-bottom: 10px; color: #555;">Qual valor deseja presentear?</p>
+                <div class="input-glass-container">
+                    <span style="font-size: 1.5rem; font-weight: bold; margin-right: 5px;">R$</span>
+                    <input type="number" id="customValueInput" placeholder="0.00" step="0.01" class="glass-input">
+                </div>
+            </div>
+            
+            <div class="pix-box" style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 12px; margin-top: 15px;">
+                <span style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 5px;">Copie e Cole no App do Banco:</span>
+                <div id="pixKeyDisplay" class="pix-code-text" style="word-break: break-all; font-family: monospace; font-size: 0.8rem; color: #555; max-height: 80px; overflow-y: auto;">
+                    Aguardando valor...
+                </div>
+            </div>
+            
+            <button id="btnCopyPix" class="btn-primary" style="width: 100%; margin-top: 20px; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="ph ph-copy"></i> Copiar Código
+            </button>
+        </div>
+    </div>
+
+    <div id="modalAdmin" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdmin">&times;</span>
+            <h2 id="modalAdminTitle">Novo Presente</h2>
+            
+            <label>Tipo de Presente:</label>
+            <select id="giftType" style="width:100%; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd;">
+                <option value="fixed">Preço Fixo (Padrão)</option>
+                <option value="custom">Cota Livre (Valor Aberto)</option>
+            </select>
+
+            <label>Título:</label>
+            <input type="text" id="newTitle" placeholder="Ex: Jantar" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 8px; border: 1px solid #ddd;">
+
+            <div id="fixedPriceFields">
+                <label>Valor (R$):</label>
+                <input type="number" id="newPrice" placeholder="150.00" step="0.01" style="width:100%; margin-bottom:10px; padding:10px; border-radius: 8px; border: 1px solid #ddd;">
+
+                <label>Link Mercado Pago:</label>
+                <input type="text" id="newLinkMP" placeholder="https://mpago.la/..." style="width:100%; margin-bottom:10px; padding:10px; border-radius: 8px; border: 1px solid #ddd;">
+            </div>
+
+            <label>Imagem:</label>
+            <input type="file" id="newImageFile" accept="image/*" style="width:100%; margin-bottom:5px;">
+            <p id="currentImageMsg" style="font-size: 0.8rem; color: #666; margin-bottom: 10px;"></p>
+            <p id="uploadStatus" style="font-size: 0.8rem; color: blue; font-weight: bold;"></p>
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button id="btnSaveGift" class="btn-primary" style="flex: 2;">Salvar</button>
+                <button id="btnDeleteGift" class="btn-outline" style="flex: 1; border-color: #ef4444; color: #ef4444; display: none;">Excluir</button>
+            </div>
+            
+            <button id="btnLogout" class="btn-outline" style="margin-top: 10px; width: 100%;">Sair</button>
+        </div>
+    </div>
 
     <script src="assets/js/main.js"></script>
     <script type="module" src="assets/js/lista-presentes.js"></script>

@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cerimônia - Davi & Camila</title>
-    
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/glass.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <meta property="og:title" content="Cerimônia e Festa - Davi & Camila">
     <meta property="og:description" content="Veja o mapa para a Igreja e Recepção e confirme sua presença aqui.">
     <meta property="og:image" content="https://davi-e-camila.vercel.app/assets/img/share-image.jpg">
     <meta property="og:url" content="https://davi-e-camila.vercel.app/cerimonia.html">
     <meta property="og:type" content="website">
+    
+    <title>Cerimônia - Davi & Camila</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/glass.css">
 </head>
 <body>
     <div class="noise-overlay"></div>
@@ -42,14 +43,14 @@
             
             <form class="rsvp-form" id="rsvpForm">
                 <div>
-                    <label for="guestName">Nome Completo</label>
+                    <label for="guestName">Nome</label>
                     <div class="autocomplete-container">
-                        <input type="text" id="guestName" class="glass-input" placeholder="Digite seu nome para buscar..." autocomplete="off" required>
+                        <input type="text" id="guestName" placeholder="Digite seu nome para buscar..." autocomplete="off" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.7); font-family: 'Montserrat', sans-serif;">
                         <div id="guestList" class="autocomplete-list"></div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-glass-blue">Confirmar Presença</button>
+                <button type="submit" class="btn-glass-blue" style="margin-top: 15px;">Confirmar Presença</button>
             </form>
         </section>
 
@@ -63,8 +64,8 @@
                 <p class="location-time">19:00h</p>
                 
                 <div class="location-actions">
-                    <a href="https://ul.waze.com/ul?ll=-15.82625756%2C-48.00803304&navigate=yes" class="btn-outline action-btn" target="_blank">Waze</a>
-                    <a href="https://goo.gl/maps/LINK_DA_IGREJA" class="btn-outline action-btn" target="_blank">Maps</a>
+                    <a href="https://ul.waze.com/ul?ll=-15.82625756%2C-48.00803304&navigate=yes" class="btn-outline action-btn" target="_blank" rel="noopener noreferrer">Waze</a>
+                    <a href="https://goo.gl/maps/LINK_DA_IGREJA" class="btn-outline action-btn" target="_blank" rel="noopener noreferrer">Maps</a>
                 </div>
             </div>
 
@@ -77,8 +78,8 @@
                 <p class="location-time">Logo após a cerimônia</p>
                 
                 <div class="location-actions">
-                    <a href="https://ul.waze.com/ul?ll=-15.79677538%2C-48.03069234&navigate=yes" class="btn-outline action-btn" target="_blank">Waze</a>
-                    <a href="https://goo.gl/maps/LINK_DA_FESTA" class="btn-outline action-btn" target="_blank">Maps</a>
+                    <a href="https://ul.waze.com/ul?ll=-15.79677538%2C-48.03069234&navigate=yes" class="btn-outline action-btn" target="_blank" rel="noopener noreferrer">Waze</a>
+                    <a href="https://goo.gl/maps/LINK_DA_FESTA" class="btn-outline action-btn" target="_blank" rel="noopener noreferrer">Maps</a>
                 </div>
             </div>
         </section>
