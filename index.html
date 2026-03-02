@@ -21,6 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/glass.css">
@@ -62,29 +63,76 @@
     </section>
 
     <main class="container">
-        <section class="section-history grid-layout">
-            <div class="glass-card">
-                <h2>Nossa História</h2>
-                <p class="mt-small">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed quidem similique explicabo assumenda ipsum iste rem quod recusandae est perferendis odit, necessitatibus quo perspiciatis deleniti quis, excepturi quasi maxime. Libero!</p>
+    <section class="section-history grid-layout">
+        <div class="glass-card" style="position: relative;">
+            <div id="adminHistoryBtn" class="admin-controls hidden">
+                <button class="btn-glass-icon edit" onclick="abrirModalHistoria()"><i class="ph ph-pencil-simple"></i></button>
             </div>
-            
-            <div class="glass-card img-placeholder">
-                <p>Foto</p>
-            </div>
-        </section>
+            <h2>Nossa História</h2>
+            <p class="mt-small" id="historiaText">Carregando nossa história...</p>
+        </div>
         
-        <section class="section-gallery">
-            <div class="glass-card text-center">
-                <h2>Galeria</h2>
-                <p>Lorem ipsum dolor.</p>
+        <div class="glass-card img-placeholder" style="position: relative; padding: 0; overflow: hidden; min-height: 300px;">
+            <div id="adminHistoryImgBtn" class="admin-controls hidden">
+                <button class="btn-glass-icon edit" onclick="abrirModalHistoriaImg()"><i class="ph ph-camera"></i></button>
             </div>
-        </section>
-    </main>
+            <img id="historiaImg" src="" alt="Nossa História" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+            <p id="historiaImgPlaceholder">Foto da História</p>
+        </div>
+    </section>
+    
+    <section class="section-gallery">
+        <div class="glass-card text-center" style="position: relative;">
+            <div id="adminGalleryBtn" class="admin-controls hidden" style="justify-content: center; position: relative; top: 0; right: 0; margin-bottom: 20px;">
+                <button class="btn-outline" style="display: flex; gap: 8px; align-items: center; margin: 0 auto;" onclick="abrirModalGaleria()">
+                    <i class="ph ph-plus"></i> Adicionar Foto
+                </button>
+            </div>
+            <h2>Galeria</h2>
+            <p>Nossos momentos especiais.</p>
+            
+            <div id="galleryContainer" class="carousel-container mt-small">
+                </div>
+        </div>
+    </section>
+</main>
 
     <footer class="footer">
-        <p>Davi & Camila 2026</p>
-    </footer>
+    <p>Davi & Camila 2026
+        <span id="triggerAdmin" style="cursor: pointer; opacity: 0.1;">&pi;</span>
+    </p>
+</footer>
+
+<div id="modalLogin" class="modal-overlay hidden">
+    <div class="modal-content" style="max-width: 300px;">
+        <span class="close-modal" onclick="fecharModais()">&times;</span>
+        <h2>Área Restrita</h2>
+        <input type="email" id="adminEmail" placeholder="Email" style="width:100%; margin-bottom:10px; padding:8px;">
+        <input type="password" id="adminPass" placeholder="Senha" style="width:100%; margin-bottom:10px; padding:8px;">
+        <button id="btnLogin" class="btn-primary">Entrar</button>
+    </div>
+</div>
+
+<div id="modalHistoria" class="modal-overlay hidden">
+    <div class="modal-content">
+        <span class="close-modal" onclick="fecharModais()">&times;</span>
+        <h2>Editar História</h2>
+        <textarea id="editHistoriaText" rows="6" style="width:100%; padding:10px; border-radius:12px; margin-bottom:15px;"></textarea>
+        <button id="btnSaveHistoria" class="btn-primary">Salvar Texto</button>
+    </div>
+</div>
+
+<div id="modalUploadInfo" class="modal-overlay hidden">
+    <div class="modal-content">
+        <span class="close-modal" onclick="fecharModais()">&times;</span>
+        <h2 id="uploadTitle">Adicionar Imagem</h2>
+        <input type="file" id="uploadFile" accept="image/*" style="width:100%; margin-bottom:15px;">
+        <p id="uploadStatus" style="font-size: 0.8rem; color: blue; font-weight: bold; margin-bottom: 10px;"></p>
+        <button id="btnSaveUpload" class="btn-primary">Fazer Upload</button>
+    </div>
+</div>
 
     <script src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/home.js"></script>
 </body>
 </html>

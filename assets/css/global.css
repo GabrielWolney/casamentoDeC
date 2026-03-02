@@ -25,7 +25,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 24px var(--container-padding);
+    padding: calc(24px + env(safe-area-inset-top)) var(--container-padding) 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +39,7 @@ body {
     -webkit-backdrop-filter: var(--glass-filter);
     border-bottom: var(--glass-border);
     box-shadow: var(--glass-shadow);
-    padding: 16px var(--container-padding);
+    padding: calc(16px + env(safe-area-inset-top)) var(--container-padding) 16px;
 }
 .nav-logo { display: flex; align-items: center; }
 .logo-img { height: 50px; width: auto; object-fit: contain; }
@@ -467,4 +467,31 @@ body {
 .btn-edit:hover, .btn-delete:hover {
     transform: scale(1.1);
     background: white;
+}
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 24px;
+    padding: 10px 5px 30px 5px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-blue) transparent;
+}
+.carousel-container::-webkit-scrollbar {
+    height: 6px;
+}
+.carousel-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+.carousel-container::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 10px;
+    opacity: 0.7;
+}
+.carousel-item {
+    flex: 0 0 300px;
+    scroll-snap-align: center;
+    max-width: 80vw;
 }
