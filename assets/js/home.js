@@ -72,7 +72,7 @@ async function carregarHome(isAdmin) {
             let deleteBtn = isAdmin ? `<button class="btn-glass-icon delete" style="position: absolute; top: 15px; right: 15px; z-index: 10;" onclick="excluirFoto('${foto.id}')"><i class="ph ph-trash"></i></button>` : '';
             card.innerHTML = `
                 ${deleteBtn}
-                <img src="${foto.image_url}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px;">
+                <img src="${foto.image_url}" loading="lazy" decoding="async" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px;">
             `;
             galleryContainer.appendChild(card);
         });
@@ -111,29 +111,80 @@ document.getElementById('btnSaveHistoria')?.addEventListener('click', async () =
     modalHistoria.classList.add('hidden');
     carregarHome(true);
 });
+const comprimirImagem = (file, maxWidth = 1200, quality = 0.8) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Mantém a proporção se a imagem for muito larga
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Converte para WEBP com 80% de qualidade
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], "imagem_comprimida.webp", {
+                        type: "image/webp",
+                        lastModified: Date.now()
+                    }));
+                }, 'image/webp', quality);
+            };
+            img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
+    });
+};
+
+// Upload de Imagens (História ou Galeria) com Compressão
 document.getElementById('btnSaveUpload')?.addEventListener('click', async () => {
     const fileInput = document.getElementById('uploadFile');
     if (fileInput.files.length === 0) return alert("Selecione uma imagem!");
+    
     const statusMsg = document.getElementById('uploadStatus');
     const btn = document.getElementById('btnSaveUpload');
     btn.disabled = true;
-    statusMsg.innerText = "Enviando para ImgBB...";
+    
     try {
+        statusMsg.innerText = "Comprimindo imagem (otimizando peso)...";
+        const arquivoOriginal = fileInput.files[0];
+        
+        // Passa o arquivo original no nosso compressor
+        const arquivoComprimido = await comprimirImagem(arquivoOriginal);
+        
+        statusMsg.innerText = "Enviando para ImgBB...";
         const formData = new FormData();
-        formData.append("image", fileInput.files[0]);
+        formData.append("image", arquivoComprimido);
+
         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
         const data = await response.json();
         if (!data.success) throw new Error("Erro ImgBB");
+        
         const imageUrl = data.data.url;
         statusMsg.innerText = "Salvando no banco...";
+
         if (uploadTarget === 'historia') {
             await supabase.from('home_info').update({ imagem_historia: imageUrl }).eq('id', 1);
         } else if (uploadTarget === 'galeria') {
             await supabase.from('galeria').insert({ image_url: imageUrl });
         }
-        alert("Imagem adicionada com sucesso!");
+
+        alert("Imagem adicionada e otimizada com sucesso!");
         fecharModais();
         carregarHome(true);
+
     } catch (err) {
         alert("Erro: " + err.message);
     } finally {

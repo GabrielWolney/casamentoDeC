@@ -30,6 +30,44 @@ let editingId = null;
 let editingImageUrl = "";
 let codigoPixAtual = ""; 
 
+// Função para comprimir a imagem antes do upload
+const comprimirImagem = (file, maxWidth = 800, quality = 0.8) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Mantém a proporção (limite de 800px para presentes é ótimo)
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Converte para WEBP com 80% de qualidade
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], "imagem_presente.webp", {
+                        type: "image/webp",
+                        lastModified: Date.now()
+                    }));
+                }, 'image/webp', quality);
+            };
+            img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
+    });
+};
+
 supabase.auth.onAuthStateChange((event) => {
     if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') carregarLista(); 
 });
@@ -94,11 +132,15 @@ if (btnSaveGift) {
             let finalImageUrl = editingImageUrl;
 
             if (fileInput.files.length > 0) {
-                statusMsg.innerText = "Enviando nova imagem...";
+                statusMsg.innerText = "Comprimindo imagem...";
                 statusMsg.style.color = "blue";
                 
+                const arquivoOriginal = fileInput.files[0];
+                const arquivoComprimido = await comprimirImagem(arquivoOriginal);
+
+                statusMsg.innerText = "Enviando imagem otimizada...";
                 const formData = new FormData();
-                formData.append("image", fileInput.files[0]);
+                formData.append("image", arquivoComprimido);
 
                 const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                     method: "POST",
