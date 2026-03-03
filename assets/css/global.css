@@ -236,11 +236,20 @@ body {
     opacity: 0.6; font-size: 0.9rem; margin-top: 60px;
 }
 @media (max-width: 768px) {
-    .navbar { flex-direction: column; gap: 15px; }
+   
+    .navbar { 
+        flex-direction: column; 
+        gap: 12px; 
+    }
+    
+   
+    .navbar, .navbar.scrolled {
+        padding-top: calc(25px + env(safe-area-inset-top, 20px)) !important;
+        padding-bottom: 15px !important;
+    }
+    
     .nav-links { gap: 20px; font-size: 0.9rem; }
     .logo-img { height: 35px; }
-    .grid-layout, .locations-grid, .gifts-grid { grid-template-columns: 1fr; gap: 24px; }
-    :root { --section-spacing: 60px; }
 }
 .locations-grid {
     display: flex;
