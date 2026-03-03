@@ -25,7 +25,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: calc(24px + env(safe-area-inset-top)) var(--container-padding) 24px;
+    padding: 30px var(--container-padding) 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +39,7 @@ body {
     -webkit-backdrop-filter: var(--glass-filter);
     border-bottom: var(--glass-border);
     box-shadow: var(--glass-shadow);
-    padding: calc(16px + env(safe-area-inset-top)) var(--container-padding) 16px;
+    padding: 15px var(--container-padding);
 }
 .nav-logo { display: flex; align-items: center; }
 .logo-img { height: 50px; width: auto; object-fit: contain; }
@@ -239,17 +239,24 @@ body {
    
     .navbar { 
         flex-direction: column; 
-        gap: 12px; 
+        gap: 15px; 
+        padding-top: 45px !important;
+        padding-bottom: 20px !important;
     }
     
    
-    .navbar, .navbar.scrolled {
-        padding-top: calc(25px + env(safe-area-inset-top, 20px)) !important;
+    .navbar.scrolled {
+        padding-top: 15px !important;
         padding-bottom: 15px !important;
     }
     
-    .nav-links { gap: 20px; font-size: 0.9rem; }
-    .logo-img { height: 35px; }
+   
+    .navbar.scrolled .nav-logo {
+        display: none;
+    }
+    
+    .nav-links { gap: 20px; font-size: 0.95rem; }
+    .logo-img { height: 45px; }
 }
 .locations-grid {
     display: flex;
