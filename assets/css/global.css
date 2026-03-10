@@ -1,8 +1,8 @@
 ﻿:root {
     --deep-blue: #1a2634;
     --primary-blue: #1278BC;
-    --font-title: 'Cormorant Garamond', serif;
-    --font-body: 'Montserrat', sans-serif;
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
     --max-width: 1280px;
     --container-padding: 5%;
     --section-spacing: 100px;
@@ -345,7 +345,7 @@ body {
     font-size: 1rem;
     color: var(--deep-blue);
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .glass-input:focus {
     background: rgba(255, 255, 255, 0.8);
@@ -513,4 +513,20 @@ body {
     flex: 0 0 85%; 
     max-width: 320px; 
     scroll-snap-align: start; 
+}
+autocomplete-list::-webkit-scrollbar {
+    width: 6px;
+    display: block; /* Força a exibição mesmo em telas touch/Mac */
+}
+.autocomplete-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    margin: 5px 0; /* Dá um respiro nas pontas */
+}
+.autocomplete-list::-webkit-scrollbar-thumb {
+    background: rgba(18, 120, 188, 0.3); /* Seu azul primário com transparência */
+    border-radius: 12px;
+}
+.autocomplete-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(18, 120, 188, 0.6);
 }

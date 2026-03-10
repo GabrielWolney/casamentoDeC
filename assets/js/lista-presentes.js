@@ -1,7 +1,12 @@
 import { supabase, CHAVE_PIX_NOIVOS, NOME_NOIVOS, CIDADE_NOIVOS } from './db.js';
 import { PixPayload } from './pix-payload.js';
 
-const IMGBB_API_KEY = "44dee0aaf082865f06be3f424c34cb23"; 
+const escapeHTML = (str) => {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[tag] || tag));
+}; 
 
 const trigger = document.getElementById('triggerAdmin');
 const modalLogin = document.getElementById('modalLogin');
@@ -138,18 +143,25 @@ if (btnSaveGift) {
                 const arquivoOriginal = fileInput.files[0];
                 const arquivoComprimido = await comprimirImagem(arquivoOriginal);
 
-                statusMsg.innerText = "Enviando imagem otimizada...";
-                const formData = new FormData();
-                formData.append("image", arquivoComprimido);
+                statusMsg.innerText = "Enviando imagem otimizada para o Supabase...";
+                
+                // Organizando as imagens de presentes em uma "pastinha" virtual
+                const fileName = `presentes/${Date.now()}_${Math.random().toString(36).substring(7)}.webp`;
 
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: "POST",
-                    body: formData
-                });
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('casamento-imagens')
+                    .upload(fileName, arquivoComprimido, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
 
-                const data = await response.json();
-                if (!data.success) throw new Error("Erro ImgBB");
-                finalImageUrl = data.data.url;
+                if (uploadError) throw uploadError;
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('casamento-imagens')
+                    .getPublicUrl(fileName);
+
+                finalImageUrl = publicUrl;
             }
 
             let pixCode = null;
@@ -273,7 +285,7 @@ async function carregarLista() {
             <div class="gift-img-placeholder">
                 <img src="${gift.image_url}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
             </div>
-            <h3>${gift.title}</h3>
+            <h3>${escapeHTML(gift.title)}</h3>
             <p class="gift-price">${priceDisplay}</p>
             ${buttonsHtml}
         `;
@@ -331,8 +343,11 @@ if (btnCopyPix) {
         if (!codigoPixAtual) return alert("Código inválido ou valor não definido!");
         navigator.clipboard.writeText(codigoPixAtual).then(() => {
             const originalText = btnCopyPix.innerHTML;
-            btnCopyPix.innerHTML = '<i class="ph ph-check"></i> Copiado!';
-            setTimeout(() => btnCopyPix.innerHTML = originalText, 2000);
+            btnCopyPix.innerHTML = '<i class="ph ph-whatsapp-logo"></i> Avise os noivos!';
+
+            alert("Pix copiado com sucesso! \n\nEnvie o comprovante de pagamento no WhatsApp do Davi ou da Camila para sabermos que o presente foi seu!");
+            
+            setTimeout(() => btnCopyPix.innerHTML = originalText, 3000);
         });
     };
 }

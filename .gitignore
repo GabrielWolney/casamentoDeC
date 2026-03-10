@@ -1,8 +1,31 @@
+.env
+.env.*
+!.env.example
+
+.vercel/
+
 
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
 Thumbs.db
+ehthumbs.db
+desktop.ini
 
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-.vercel/
+node_modules/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

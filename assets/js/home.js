@@ -159,20 +159,33 @@ document.getElementById('btnSaveUpload')?.addEventListener('click', async () => 
     
     try {
         statusMsg.innerText = "Comprimindo imagem (otimizando peso)...";
+        statusMsg.style.color = "blue";
         const arquivoOriginal = fileInput.files[0];
         
-        // Passa o arquivo original no nosso compressor
+        // Passa o arquivo original no compressor
         const arquivoComprimido = await comprimirImagem(arquivoOriginal);
         
-        statusMsg.innerText = "Enviando para ImgBB...";
-        const formData = new FormData();
-        formData.append("image", arquivoComprimido);
-
-        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
-        const data = await response.json();
-        if (!data.success) throw new Error("Erro ImgBB");
+        statusMsg.innerText = "Enviando para o Supabase...";
         
-        const imageUrl = data.data.url;
+        // Cria um nome de arquivo único para não sobrescrever imagens antigas
+        const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.webp`;
+
+        // Faz o upload direto para o bucket 'casamento-imagens'
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('casamento-imagens')
+            .upload(fileName, arquivoComprimido, {
+                cacheControl: '3600',
+                upsert: false
+            });
+
+        if (uploadError) throw uploadError;
+        
+        // Pega a URL pública da imagem que acabou de subir
+        const { data: { publicUrl } } = supabase.storage
+            .from('casamento-imagens')
+            .getPublicUrl(fileName);
+
+        const imageUrl = publicUrl;
         statusMsg.innerText = "Salvando no banco...";
 
         if (uploadTarget === 'historia') {

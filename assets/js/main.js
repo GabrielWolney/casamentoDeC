@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (gap < 0) {
         countdownEl.innerHTML = `<div class="countdown-container"><span class="time-number">Chegou o Grande Dia!</span></div>`;
-        return;
+       clearInterval(timerInterval); 
+       return;
     }
 
     const days = Math.floor(gap / (1000 * 60 * 60 * 24));
@@ -51,8 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `;
 };
-        setInterval(updateTimer, 1000);
-        updateTimer();
+        const timerInterval = setInterval(updateTimer, 1000);
     }
 
     const rsvpForm = document.getElementById('rsvpForm');
@@ -74,36 +74,44 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         loadGuests();
 
-        input.addEventListener('input', function() {
-            const val = normalizeText(this.value);
-            listContainer.innerHTML = ''; 
-            
-            if (val.length < 2) {
-                listContainer.style.display = 'none';
-                return;
-            }
+        const debounce = (func, delay) => {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+};
 
-            const matches = guestDatabase.filter(name => normalizeText(name).includes(val));
+        input.addEventListener('input', debounce(function() {
+    const val = normalizeText(this.value);
+    listContainer.innerHTML = ''; 
+    
+    if (val.length < 2) {
+        listContainer.style.display = 'none';
+        return;
+    }
 
-            if (matches.length > 0) {
-                listContainer.style.display = 'block';
-                const fragment = document.createDocumentFragment();
-                
-                matches.forEach(name => {
-                    const item = document.createElement('div');
-                    item.className = 'autocomplete-item';
-                    item.innerText = name; 
-                    item.addEventListener('click', () => {
-                        input.value = name; 
-                        listContainer.style.display = 'none'; 
-                    });
-                    fragment.appendChild(item);
-                });
-                listContainer.appendChild(fragment);
-            } else {
-                listContainer.style.display = 'none';
-            }
+    const matches = guestDatabase.filter(name => normalizeText(name).includes(val));
+
+    if (matches.length > 0) {
+        listContainer.style.display = 'block';
+        const fragment = document.createDocumentFragment();
+        
+        matches.forEach(name => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.innerText = name; 
+            item.addEventListener('click', () => {
+                input.value = name; 
+                listContainer.style.display = 'none'; 
+            });
+            fragment.appendChild(item);
         });
+        listContainer.appendChild(fragment);
+    } else {
+        listContainer.style.display = 'none';
+    }
+}, 300));
 
         document.addEventListener('click', (e) => {
             if (e.target !== input) listContainer.style.display = 'none';
