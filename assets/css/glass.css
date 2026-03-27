@@ -1,17 +1,18 @@
 ﻿:root {
-    /* Fundo mais transparente para deixar o blur trabalhar */
-    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+    /* Fundo ligeiramente mais translúcido para a aquarela pulsar por trás */
+    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 100%);
     
-    /* Blur dobrado e saturação aumentada (o segredo do iOS) */
-    --glass-filter: blur(40px) saturate(200%);
+    /* Blur extremo e saturação alta: o pilar da estética iOS 26 */
+    --glass-filter: blur(48px) saturate(220%);
     
-    /* Borda semi-transparente fina */
-    --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Refração de luz nas bordas (Brilho superior, base escura) */
+    --glass-border-light: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-border-dark: 1px solid rgba(255, 255, 255, 0.1);
     
-    /* O "pulo do gato": sombra suave fora + reflexo branco forte na borda superior/esquerda interna */
+    /* Sombra projetada colorida para mesclar com o azul do tema, mais reflexos internos fortes */
     --glass-shadow: 
-        0 8px 32px 0 rgba(0, 0, 0, 0.08), 
-        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.4),
+        0 24px 48px -12px rgba(18, 120, 188, 0.12), 
+        inset 1px 1px 2px 0 rgba(255, 255, 255, 0.6),
         inset -1px -1px 1px 0 rgba(255, 255, 255, 0.05);
         
     --radius-card: 28px;
@@ -23,16 +24,29 @@
     --radius-lg: 28px;   /* Cards principais */
     --radius-pill: 50px; /* Botões arredondados (como o RSVP) */
 }
+
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: var(--glass-filter);
     -webkit-backdrop-filter: var(--glass-filter);
-    border: var(--glass-border);
+    
+    /* Simulando o chanfro de vidro da Apple */
+    border-top: var(--glass-border-light);
+    border-left: var(--glass-border-light);
+    border-right: var(--glass-border-dark);
+    border-bottom: var(--glass-border-dark);
+    
     border-radius: var(--radius-card);
     box-shadow: var(--glass-shadow);
     padding: clamp(24px, 5vw, 40px);
-    transition: transform 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    /* HACK SÊNIOR DE PERFORMANCE: Força o navegador a jogar a renderização para a GPU */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, backdrop-filter;
 }
+
 input, select, textarea {
     width: 100%; padding: 18px 20px; margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 16px;
@@ -153,6 +167,7 @@ input:focus, select:focus { background: rgba(255, 255, 255, 0.9); border-color: 
     margin: 0;
 }
 .glass-input[type=number] {
+    appearance: textfield;
     -moz-appearance: textfield;
 }
 .hidden { display: none !important; }
@@ -161,5 +176,5 @@ input:focus, select:focus { background: rgba(255, 255, 255, 0.9); border-color: 
     background: rgba(255, 255, 255, 0.9);
 }
 .glass-card h2, .glass-card h3, .glass-card p {
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* Cria um halo de luz ao redor da letra escura */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }

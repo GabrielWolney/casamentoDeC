@@ -20,12 +20,15 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
 }
+
+/* ── NAVBAR COM BLINDAGEM DE SAFE AREA ── */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 30px var(--container-padding) 20px;
+    /* Desvia da câmera/notch nativamente */
+    padding: calc(30px + env(safe-area-inset-top)) var(--container-padding) 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,9 +40,14 @@ body {
     background: var(--glass-bg);
     backdrop-filter: var(--glass-filter);
     -webkit-backdrop-filter: var(--glass-filter);
-    border-bottom: var(--glass-border);
+    border-bottom: var(--glass-border-light);
     box-shadow: var(--glass-shadow);
-    padding: 15px var(--container-padding);
+    /* Mantém a proteção do notch com a navbar colapsada */
+    padding: calc(15px + env(safe-area-inset-top)) var(--container-padding);
+    /* Aceleração de Hardware */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: backdrop-filter;
 }
 .nav-logo { display: flex; align-items: center; }
 .logo-img { height: 50px; width: auto; object-fit: contain; }
@@ -52,10 +60,13 @@ body {
     transition: opacity 0.3s;
 }
 .nav-links a.active, .nav-links a:hover { opacity: 1; font-weight: 600; color: var(--primary-blue); }
+
+/* ── HERO SECTION COM DVH ── */
 .hero-section {
     position: relative;
     width: 100%;
-    height: 70vh;
+    /* dvh impede que a rolagem corte o conteúdo ao exibir a barra de endereços mobile */
+    height: 70dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,6 +108,7 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
     z-index: 1;
 }
+
 .countdown-bar {
     width: 100%;
     background: rgba(255, 255, 255, 0.25);
@@ -141,12 +153,7 @@ body {
     color: #5DAED6;
     margin-top: 8px;
 }
-@media (max-width: 768px) {
-    .time-box { padding: 0 25px; }
-    .time-number { font-size: 2.2rem; }
-    .hero-section::after { height: 30%; mask-image: linear-gradient(to bottom, transparent 0%, black 80%); } 
-    .countdown-bar { margin-top: -50px; padding: 20px 0; }
-}
+
 .container {
     width: 100%;
     max-width: var(--max-width);
@@ -161,6 +168,8 @@ body {
 .section-history, .section-gallery { margin-bottom: var(--section-spacing); }
 .mt-small { margin-top: 20px; }
 .mb-small { margin-bottom: 20px; }
+.mt-large { margin-top: clamp(40px, 8vw, 80px); }
+.mb-large { margin-bottom: clamp(40px, 8vw, 80px); }
 .img-placeholder {
     width: 100%;
     height: 100%;
@@ -197,6 +206,8 @@ body {
 }
 .swatch-serenity { background-color: #9bbde2; }
 .gift-price { font-weight: 600; font-size: 1.1rem; margin: 5px 0 15px 0; color: var(--deep-blue); }
+
+/* Modais */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.4); z-index: 2000;
@@ -231,33 +242,12 @@ body {
     .modal-content { border-radius: 24px; transform: scale(0.9); max-width: 450px; }
     .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
 }
+
 .footer {
     text-align: center; padding: 60px 20px;
     opacity: 0.6; font-size: 0.9rem; margin-top: 60px;
 }
-@media (max-width: 768px) {
-   
-    .navbar { 
-        flex-direction: column; 
-        gap: 15px; 
-        padding-top: 45px !important;
-        padding-bottom: 20px !important;
-    }
-    
-   
-    .navbar.scrolled {
-        padding-top: 15px !important;
-        padding-bottom: 15px !important;
-    }
-    
-   
-    .navbar.scrolled .nav-logo {
-        display: none;
-    }
-    
-    .nav-links { gap: 20px; font-size: 0.95rem; }
-    .logo-img { height: 45px; }
-}
+
 .locations-grid {
     display: flex;
     flex-wrap: wrap;
@@ -280,28 +270,8 @@ body {
     border-radius: 24px 24px 0 0;
     display: block;
 }
-@media (max-width: 768px) {
-    .location-img {
-        width: calc(100% + 48px); 
-        margin: -24px -24px 20px -24px;
-    }
-}
-.location-actions {
-    margin-top: auto;
-    padding-top: 20px;
-    display: flex;
-    gap: 15px;
-}
-.action-btn {
-    flex: 1;
-    text-align: center;
-}
-.locations-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 40px;
-}
+
+/* RSVP */
 #rsvp-section.glass-card {
     box-shadow: 
         0 20px 40px -10px rgba(0,0,0,0.1), 
@@ -375,12 +345,7 @@ body {
     box-shadow: 0 15px 30px -5px rgba(18, 120, 188, 0.5);
     background: linear-gradient(135deg, #2F9BDC 0%, #1C8BD1 100%);
 }
-@media (max-width: 768px) {
-    #rsvp-section.glass-card {
-        padding: 25px 20px;
-    }
-    #rsvp-section h2 { font-size: 1.8rem; margin-bottom: 15px; }
-}
+
 .autocomplete-container {
     position: relative;
     width: 100%;
@@ -420,70 +385,7 @@ body {
     background-color: var(--primary-blue) !important;
     color: white !important;
 }
-.secret-link {
-    color: inherit;     
-    text-decoration: none;
-    opacity: 0.2;       
-    font-size: 0.8rem;  
-    margin-left: 10px;  
-    cursor: default;    
-}
-.secret-link:hover {
-    opacity: 1;         
-    cursor: pointer;
-}
-.modal-content {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);         
-    -webkit-backdrop-filter: blur(12px); 
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 16px;
-    color: #333;
-    margin: 15% auto;
-    padding: 2rem;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-    animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.admin-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 8px;
-    z-index: 10;
-}
-.btn-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.btn-edit {
-    background: rgba(255, 255, 255, 0.9);
-    color: #f59e0b;
-}
-.btn-delete {
-    background: rgba(255, 255, 255, 0.9);
-    color: #ef4444;
-}
-.btn-edit:hover, .btn-delete:hover {
-    transform: scale(1.1);
-    background: white;
-}
+
 .carousel-container {
     display: flex;
     overflow-x: auto;
@@ -514,19 +416,61 @@ body {
     max-width: 320px; 
     scroll-snap-align: start; 
 }
-autocomplete-list::-webkit-scrollbar {
+.autocomplete-list::-webkit-scrollbar {
     width: 6px;
-    display: block; /* Força a exibição mesmo em telas touch/Mac */
+    display: block; 
 }
 .autocomplete-list::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.04);
     border-radius: 12px;
-    margin: 5px 0; /* Dá um respiro nas pontas */
+    margin: 5px 0; 
 }
 .autocomplete-list::-webkit-scrollbar-thumb {
-    background: rgba(18, 120, 188, 0.3); /* Seu azul primário com transparência */
+    background: rgba(18, 120, 188, 0.3); 
     border-radius: 12px;
 }
 .autocomplete-list::-webkit-scrollbar-thumb:hover {
     background: rgba(18, 120, 188, 0.6);
+}
+
+@media (max-width: 768px) {
+    .time-box { padding: 0 25px; }
+    .time-number { font-size: 2.2rem; }
+    .hero-section::after { height: 30%; mask-image: linear-gradient(to bottom, transparent 0%, black 80%); } 
+    .countdown-bar { margin-top: -50px; padding: 20px 0; }
+    .location-img { width: calc(100% + 48px); margin: -24px -24px 20px -24px; }
+    #rsvp-section.glass-card { padding: 25px 20px; }
+    #rsvp-section h2 { font-size: 1.8rem; margin-bottom: 15px; }
+
+    /* Novo comportamento da Navbar Mobile Premium c/ proteção de Safe Area */
+    .navbar { 
+        flex-direction: column; 
+        gap: 15px; 
+        padding-top: calc(35px + env(safe-area-inset-top)) !important;
+        padding-bottom: 15px !important;
+        transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .navbar.scrolled {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: calc(12px + env(safe-area-inset-top)) 20px 12px 20px !important;
+        gap: 10px;
+    }
+    
+    .logo-img { 
+        height: 45px; 
+        transition: height 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .navbar.scrolled .logo-img {
+        height: 32px;
+    }
+    
+    .nav-links { gap: 20px; font-size: 0.95rem; transition: all 0.5s; }
+    
+    .navbar.scrolled .nav-links {
+        gap: 12px;
+        font-size: 0.85rem;
+    }
 }
